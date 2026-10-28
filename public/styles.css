@@ -93,3 +93,4 @@ details summary{cursor:pointer;color:var(--ink2)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
 .trace.done summary,details.trace summary{color:#f3c978;font-weight:600;margin:0}
+.foot a{color:var(--ink2);text-decoration:underline;text-underline-offset:3px}.foot a:hover{color:var(--ink)}
