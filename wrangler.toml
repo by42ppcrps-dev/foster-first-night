@@ -1,0 +1,25 @@
+name = "foster-first-night"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# Secrets (never in this file):  wrangler secret put QLOO_API_KEY
+#                                wrangler secret put GEMINI_API_KEY   (optional: without it the built-in planner answers)
+[vars]
+GEMINI_MODEL = "gemini-3.1-flash-lite"
+AGENT_DAILY_CAP = "300"
+
+# Per-day counter for model runs. Stores a number, never request data.
+[[kv_namespaces]]
+binding = "BUDGET"
+id = "2d1e64e969794e688d0dd891431c380d"
+
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "4471"
+  [ratelimits.simple]
+  limit = 8
+  period = 60

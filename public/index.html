@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foster First Night: be ready before the doorbell rings</title>
+<meta name="description" content="An agent that plans a foster child's first night from live Qloo taste data, with age, trigger and sensitivity rules enforced in code.">
+<meta name="theme-color" content="#1b2036">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231b2036'/%3E%3Cpath d='M20.5 7.5a9 9 0 1 0 4 12.8A7.5 7.5 0 0 1 20.5 7.5z' fill='%23f2b45a'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="skip" href="#plan">Skip to the planner</a>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="Foster First Night, home">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#1b2036"/><path d="M20.5 7.5a9 9 0 1 0 4 12.8A7.5 7.5 0 0 1 20.5 7.5z" fill="#f2b45a"/></svg>
+      <span>Foster First Night</span>
+    </a>
+    <nav aria-label="Primary"><a href="#plan">Planner</a><a href="#how">How it works</a><a href="#agents">For agents</a></nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Built on Qloo&rsquo;s taste data</p>
+      <h1>Be ready before the doorbell rings.</h1>
+      <p class="lede">A child arrives tonight and you know almost nothing. Share a few favorites. An agent builds a small, kind plan of things to watch, play and eat, and shows you everything it held back and why.</p>
+      <ul class="chips" aria-label="Privacy">
+        <li>No names or case details</li><li>Nothing is stored</li><li>Age, triggers and sensitive themes checked in code</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap planner" id="plan">
+    <form id="form" class="card form" autocomplete="off" novalidate>
+      <h2>About tonight</h2>
+      <p class="hint">Only what a caseworker would tell you at the door. Names, addresses and case numbers are removed before anything is sent.</p>
+      <div class="presets" role="group" aria-label="Try an example">
+        <span>Try an example</span>
+        <button type="button" data-preset="0">8, East LA</button>
+        <button type="button" data-preset="1">13, anime</button>
+        <button type="button" data-preset="2">5, pho</button>
+        <button type="button" data-preset="3">10, almost nothing</button>
+      </div>
+      <div class="row2">
+        <label>Age<input id="age" type="number" inputmode="numeric" min="2" max="17" required placeholder="8"></label>
+        <label>Foster city<input id="fosterCity" type="text" maxlength="60" placeholder="Boise"></label>
+      </div>
+      <label>Favorites <small>shows, films, artists, games, foods</small>
+        <textarea id="favorites" rows="3" maxlength="600" placeholder="Bluey, Encanto, pozole"></textarea></label>
+      <label>Things to avoid <small>fears, topics, sounds</small>
+        <textarea id="triggers" rows="2" maxlength="400" placeholder="dogs, loud yelling"></textarea></label>
+      <label>Where they are from <small>optional, used as a hint only</small>
+        <input id="hometown" type="text" maxlength="60" placeholder="East LA"></label>
+      <div class="marked" id="markedBox" hidden><span>Marked as scary:</span><ul id="markedList"></ul></div>
+      <button class="go" id="go" type="submit"><span id="goText">Plan the night</span></button>
+      <p class="err" id="err" role="alert" hidden></p>
+    </form>
+
+    <div class="out" id="out" aria-live="polite">
+      <div class="empty card" id="empty">
+        <svg viewBox="0 0 120 80" aria-hidden="true"><circle cx="86" cy="26" r="16" fill="#f2b45a"/><circle cx="94" cy="20" r="14" fill="#fbf5ea"/><path d="M8 70h104M24 70V46l22-16 22 16v24M38 70V54h16v16" fill="none" stroke="#1b2036" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="104" cy="52" r="2" fill="#f2b45a"/><circle cx="18" cy="22" r="2" fill="#f2b45a"/></svg>
+        <h2>Your plan appears here</h2>
+        <p>Pick an example on the left, or fill in what you know. It takes about fifteen seconds.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap how" id="how">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><b>Qloo knows taste.</b> Each favorite is looked up in Qloo. Its recommendations, tags and explainability scores supply every title, artist and restaurant. Nothing is invented.</li>
+      <li><b>An agent plans.</b> A Gemini model chooses which tools to call and words the openers and the evening. It sees only what you typed after the privacy screen.</li>
+      <li><b>Code has the last word.</b> Content ratings for the child&rsquo;s age, trigger words, themes like separation or adoption, explicit music and adult venues are enforced in code. The agent cannot override them, and every item held back is listed with its reason.</li>
+    </ol>
+  </section>
+
+  <section class="wrap agents" id="agents">
+    <h2>For agents</h2>
+    <p>The same planner and safety layer is a Model Context Protocol server over Streamable HTTP. Any MCP client can plan a first night or check one title.</p>
+    <div class="mcp">
+      <div><span class="k">Endpoint</span><code id="mcpUrl">/mcp</code><button type="button" class="copy" data-copy="mcpUrl">Copy</button></div>
+      <div><span class="k">Tools</span><code id="mcpTools">plan_first_night, suggest, nearby_food, check_item</code></div>
+    </div>
+    <details><summary>Add it to an MCP client</summary>
+      <pre id="mcpConfig"></pre></details>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Foster First Night was made for the Qloo Agentic Hackathon. Taste data from Qloo. Planning agent: Gemini. It does not store anything about a child.</p>
+    <p class="small">A tool for foster parents to prepare, not a substitute for the caseworker, the child&rsquo;s own words, or your judgment.</p>
+  </div>
+</footer>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

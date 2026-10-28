@@ -1,0 +1,10 @@
+{
+  "name": "foster-first-night",
+  "version": "1.0.0",
+  "type": "module",
+  "private": false,
+  "description": "A first-night plan for a child placed in foster care: live Qloo taste data, a Gemini planning agent, a code-enforced safety layer, and an MCP server.",
+  "license": "MIT",
+  "scripts": { "test": "node --test test/*.test.js", "dev": "wrangler dev", "deploy": "wrangler deploy" },
+  "devDependencies": { "wrangler": "^4" }
+}
